@@ -1,10 +1,10 @@
-Boost CMake Modules [![Build Status](https://travis-ci.com/BoostCMake/bcm.svg?branch=master)](https://travis-ci.com/BoostCMake/bcm)
+CMake Modules [![Build Status](https://travis-ci.com/BoostCMake/cmake_modules.svg?branch=master)](https://travis-ci.com/BoostCMake/cmake_modules)
 ===
 
 Motivation
 ----------
 
-This provides cmake modules that can be re-used by boost and other dependencies. It provides modules to reduce the boilerplate for installing, versioning, setting up package config, and creating tests.
+This provides cmake modules suitable for in-project and in-repository dependencies management. It provides modules to reduce the boilerplate for installing, versioning, setting up package config, and creating tests.
 
 Usage
 -----
