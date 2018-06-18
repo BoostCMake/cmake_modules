@@ -1,11 +1,11 @@
-cmake_minimum_required (VERSION 3.5)
+cmake_minimum_required(VERSION 3.5)
 project(simple)
 
 find_package(BCM)
 
 include(BCMInstallTargets)
 include(BCMDeploy)
-include(BCMSetupVersion) if(CMAKE_SOURCES_DIR)     set(CURRENT_SOURCES_DIR ${CMAKE_SOURCES_DIR}/libs/${CURRENT_PROJECT_NAME}) endif()
+include(BCMSetupVersion)
 include(BCMTest)
 include(BCMPkgConfig)
 
@@ -18,7 +18,7 @@ target_include_directories(simple INTERFACE $<INSTALL_INTERFACE:$<INSTALL_PREFIX
 target_compile_definitions(simple INTERFACE -DSOME_DEFINE=1 -DHAS_SIMPLE=1 -DDEFINE_3=3)
 target_link_libraries(simple INTERFACE Threads::Threads)
 if(NOT MSVC)
-target_compile_options(simple INTERFACE -std=c++0x)
+    target_compile_options(simple INTERFACE -std=c++0x)
 endif()
 cm_test_link_libraries(simple)
 install(FILES test.cpp DESTINATION include2)

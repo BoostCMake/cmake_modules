@@ -1,11 +1,11 @@
-cmake_minimum_required (VERSION 3.5)
+cmake_minimum_required(VERSION 3.5)
 project(pkgconfigcheck)
 
 find_package(BCM)
 
 include(BCMInstallTargets)
 include(BCMDeploy)
-include(BCMSetupVersion) if(CMAKE_SOURCES_DIR)     set(CURRENT_SOURCES_DIR ${CMAKE_SOURCES_DIR}/libs/${CURRENT_PROJECT_NAME}) endif()
+include(BCMSetupVersion)
 include(BCMTest)
 include(BCMPkgConfig)
 

@@ -1,8 +1,8 @@
 macro(check_prop PROP_NAME VAR_NAME PROP_VALUE)
-    build_dir(${TEST_DIR}/checkprop CMAKE_ARGS 
-        -D${VAR_NAME}=${PROP_VALUE} 
-        -DPROP_NAME=${PROP_NAME} 
-        -DPROP_VALUE=${PROP_VALUE})
+    build_dir(${TEST_DIR}/checkprop CMAKE_ARGS
+              -D${VAR_NAME}=${PROP_VALUE}
+              -DPROP_NAME=${PROP_NAME}
+              -DPROP_VALUE=${PROP_VALUE})
 endmacro()
 
 foreach(VALUE On Off 1 0)

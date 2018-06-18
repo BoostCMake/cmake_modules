@@ -56,14 +56,14 @@ function(install_dir DIR)
         set(TOOLCHAIN_ARG "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}")
     endif()
     test_exec(COMMAND ${CMAKE_COMMAND}
-        -DCMAKE_PREFIX_PATH=${PREFIX} 
-        -DCMAKE_INSTALL_PREFIX=${PREFIX}
-        -DTHREADS_PREFER_PTHREAD_FLAG=1
-        ${TOOLCHAIN_ARG}
-        ${PARSE_CMAKE_ARGS}
-        ${DIR}
-        WORKING_DIRECTORY ${BUILD_DIR}
-    )
+              -DCMAKE_PREFIX_PATH=${PREFIX}
+              -DCMAKE_INSTALL_PREFIX=${PREFIX}
+              -DTHREADS_PREFER_PTHREAD_FLAG=1
+              ${TOOLCHAIN_ARG}
+              ${PARSE_CMAKE_ARGS}
+              ${DIR}
+              WORKING_DIRECTORY ${BUILD_DIR}
+              )
     test_exec(COMMAND ${CMAKE_COMMAND} --build ${BUILD_DIR})
     foreach(TARGET ${PARSE_TARGETS})
         test_exec(COMMAND ${CMAKE_COMMAND} --build ${BUILD_DIR} --target ${TARGET})

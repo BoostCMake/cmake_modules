@@ -7,17 +7,17 @@ set(SKIP_TESTS)
 
 if(DEFINED ENV{APPVEYOR})
     list(APPEND SKIP_TESTS
-        pass-basic
-        pass-simplecustomname
-        pass-simplenamespace
-        pass-simple-test
-    )
+         pass-basic
+         pass-simplecustomname
+         pass-simplenamespace
+         pass-simple-test
+         )
 endif()
 
 function(create_test NAME TEST)
     set(CONTEXT)
     # get_cmake_property(VARS VARIABLES)
-    foreach (VAR_NAME CMAKE_TOOLCHAIN_FILE CMAKE_CROSSCOMPILING)
+    foreach(VAR_NAME CMAKE_TOOLCHAIN_FILE CMAKE_CROSSCOMPILING)
         list(APPEND CONTEXT -D${VAR_NAME}=${${VAR_NAME}})
     endforeach()
     add_custom_target(${NAME} COMMAND ${CMAKE_COMMAND} ${CONTEXT} -P ${CMAKE_CURRENT_SOURCE_DIR}/test.cmake ${TEST} ${CMAKE_CURRENT_BINARY_DIR}/tmp/${NAME})

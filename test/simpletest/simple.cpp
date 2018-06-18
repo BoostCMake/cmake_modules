@@ -1,5 +1,4 @@
-
 #include <simple.h>
 
-void simple()
-{}
+void simple() {
+}

@@ -1,8 +1,7 @@
 #include <simple.h>
 #include <cstdlib>
 
-int main()
-{
+int main() {
     std::abort();
-    simple();   
+    simple();
 }

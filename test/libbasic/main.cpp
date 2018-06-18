@@ -1,8 +1,6 @@
-
 #include <simpleversion.hpp>
 #include <simple.h>
 
-inline void basic()
-{
-    simple();   
+inline void basic() {
+    simple();
 }

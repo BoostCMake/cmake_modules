@@ -1,8 +1,6 @@
-
 #include <simple.h>
 #include <cstdlib>
 
-int main()
-{
+int main() {
     return 1;
 }

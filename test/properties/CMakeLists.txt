@@ -1,10 +1,10 @@
-cmake_minimum_required (VERSION 3.5)
+cmake_minimum_required(VERSION 3.5)
 project(properties)
 
 find_package(BCM)
 
 include(BCMProperties)
-include(BCMSetupVersion) if(CMAKE_SOURCES_DIR)     set(CURRENT_SOURCES_DIR ${CMAKE_SOURCES_DIR}/libs/${CURRENT_PROJECT_NAME}) endif()
+include(BCMSetupVersion)
 include(BCMDeploy)
 include(BCMTest)
 

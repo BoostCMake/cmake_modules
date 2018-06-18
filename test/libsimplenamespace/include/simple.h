@@ -1,4 +1,3 @@
-
 #ifndef GUARD_SIMPLE_H
 #define GUARD_SIMPLE_H
 
@@ -6,8 +5,7 @@
 #error "Not configured"
 #endif
 
-inline void simple()
-{
+inline void simple() {
 }
 
 
