@@ -27,7 +27,6 @@ function(cm_install_targets)
 
 
     if(NOT PARSE_SKIP_HEADER_INSTALL)
-        message(STATUS "cm_install_targets.proceed-with-install ${INCLUDE_INSTALL_DIR}  ")
         foreach(INCLUDE ${PARSE_INCLUDE})
             install(DIRECTORY ${INCLUDE}/ DESTINATION ${INCLUDE_INSTALL_DIR})
         endforeach()
