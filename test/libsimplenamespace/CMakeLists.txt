@@ -5,24 +5,24 @@ find_package(BCM)
 
 include(BCMInstallTargets)
 include(BCMDeploy)
-include(BCMSetupVersion)
+include(BCMSetupVersion) if(CMAKE_SOURCES_DIR)     set(CURRENT_SOURCES_DIR ${CMAKE_SOURCES_DIR}/libs/${CURRENT_PROJECT_NAME}) endif()
 include(BCMTest)
 
-bcm_setup_version(VERSION 1.0)
+cm_setup_version(VERSION 1.0)
 
 add_library(simple INTERFACE)
 target_compile_definitions(simple INTERFACE -DHAS_SIMPLE=1)
-bcm_deploy(TARGETS simple INCLUDE include NAMESPACE lib::)
+cm_deploy(TARGETS simple INCLUDE include NAMESPACE lib::)
 
-bcm_test(NAME simpletest SOURCES test.cpp)
+cm_test(NAME simpletest SOURCES test.cpp)
 target_link_libraries(simpletest lib::simple)
 
-bcm_test(NAME simpletestcompile SOURCES compiletest.cpp COMPILE_ONLY)
+cm_test(NAME simpletestcompile SOURCES compiletest.cpp COMPILE_ONLY)
 target_link_libraries(simpletestcompile lib::simple)
 
-bcm_test_header(NAME simpletestheader HEADER simple.h)
+cm_test_header(NAME simpletestheader HEADER simple.h)
 target_link_libraries(simpletestheader lib::simple)
 
-bcm_test_header(NAME simpleteststaticheader HEADER simple.h STATIC)
+cm_test_header(NAME simpleteststaticheader HEADER simple.h STATIC)
 target_link_libraries(simpleteststaticheader lib::simple)
 

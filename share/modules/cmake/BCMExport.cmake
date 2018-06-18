@@ -1,7 +1,7 @@
 include(GNUInstallDirs)
 include(WriteBasicConfigVersionFile)
 
-function(bcm_get_target_package_source OUT_VAR TARGET)
+function(cm_get_target_package_source OUT_VAR TARGET)
     set(RESULT)
     if(TARGET ${TARGET})
         get_property(TARGET_ALIAS TARGET ${TARGET} PROPERTY ALIASED_TARGET)
@@ -33,18 +33,18 @@ function(bcm_get_target_package_source OUT_VAR TARGET)
         else()
             set(TARGET_NAME "${TARGET}")
         endif()
-        bcm_shadow_exists(HAS_TARGET ${TARGET})
+        cm_shadow_exists(HAS_TARGET ${TARGET})
         set(RESULT "$<${HAS_TARGET}:$<TARGET_PROPERTY:${TARGET_NAME},INTERFACE_FIND_PACKAGE_NAME>>")
     endif()
     set(${OUT_VAR} "${RESULT}" PARENT_SCOPE)
 endfunction()
 
-function(bcm_auto_export)
+function(cm_auto_export)
     set(options)
     set(oneValueArgs NAMESPACE EXPORT NAME COMPATIBILITY)
     set(multiValueArgs TARGETS)
 
-    cmake_parse_arguments(PARSE "${options}" "${oneValueArgs}" "${multiValueArgs}"  ${ARGN})
+    cmake_parse_arguments(PARSE "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
     string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
     set(PACKAGE_NAME ${PROJECT_NAME})
@@ -78,7 +78,7 @@ include(CMakeFindDependencyMacro)
         foreach(TARGET ${PARSE_TARGETS})
             get_property(TARGET_LIBS TARGET ${TARGET} PROPERTY INTERFACE_LINK_LIBRARIES)
             foreach(LIB ${TARGET_LIBS})
-                bcm_get_target_package_source(PKG_SRC ${LIB})
+                cm_get_target_package_source(PKG_SRC ${LIB})
                 set(HAS_PKG_SRC "$<BOOL:${PKG_SRC}>")
                 string(APPEND CONFIG_FILE_CONTENT "# $<$<NOT:${HAS_PKG_SRC}>:Skip >Library: ${LIB}\n")
                 string(APPEND CONFIG_FILE_CONTENT "$<${HAS_PKG_SRC}:find_dependency(${PKG_SRC})>\n")
@@ -121,26 +121,26 @@ include(\"\${CMAKE_CURRENT_LIST_DIR}/properties-${TARGET_FILE}.cmake\")
         set(COMPATIBILITY_ARG ${PARSE_COMPATIBILITY})
     endif()
     write_basic_config_version_file(
-        ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_NAME}-version.cmake
-        VERSION ${TARGET_VERSION}
-        COMPATIBILITY ${COMPATIBILITY_ARG}
+            ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_NAME}-version.cmake
+            VERSION ${TARGET_VERSION}
+            COMPATIBILITY ${COMPATIBILITY_ARG}
     )
 
     set(NAMESPACE_ARG)
     if(PARSE_NAMESPACE)
         set(NAMESPACE_ARG "NAMESPACE;${PARSE_NAMESPACE}")
     endif()
-    install( EXPORT ${TARGET_FILE}
-        DESTINATION
-        ${CONFIG_PACKAGE_INSTALL_DIR}
-        ${NAMESPACE_ARG}
-    )
+    install(EXPORT ${TARGET_FILE}
+            DESTINATION
+            ${CONFIG_PACKAGE_INSTALL_DIR}
+            ${NAMESPACE_ARG}
+            )
 
-    install( FILES
-        ${CONFIG_FILE}
-        ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_NAME}-version.cmake
-        DESTINATION
-        ${CONFIG_PACKAGE_INSTALL_DIR})
+    install(FILES
+            ${CONFIG_FILE}
+            ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_NAME}-version.cmake
+            DESTINATION
+            ${CONFIG_PACKAGE_INSTALL_DIR})
 
 endfunction()
 

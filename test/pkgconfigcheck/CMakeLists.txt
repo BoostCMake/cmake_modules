@@ -5,7 +5,7 @@ find_package(BCM)
 
 include(BCMInstallTargets)
 include(BCMDeploy)
-include(BCMSetupVersion)
+include(BCMSetupVersion) if(CMAKE_SOURCES_DIR)     set(CURRENT_SOURCES_DIR ${CMAKE_SOURCES_DIR}/libs/${CURRENT_PROJECT_NAME}) endif()
 include(BCMTest)
 include(BCMPkgConfig)
 
@@ -29,18 +29,18 @@ endif()
 find_package(PkgConfig)
 pkg_check_modules(PKGS REQUIRED ${PKG_CONFIG_MODULES})
 
-bcm_setup_version(VERSION 1.0 GENERATE_HEADER pkgconfigcheckversion.hpp)
+cm_setup_version(VERSION 1.0 GENERATE_HEADER pkgconfigcheckversion.hpp)
 
 add_library(pkgconfigcheck INTERFACE)
 target_compile_options(pkgconfigcheck INTERFACE ${PKGS_CFLAGS})
 target_link_libraries(pkgconfigcheck INTERFACE ${PKGS_LDFLAGS})
-bcm_test_link_libraries(pkgconfigcheck)
+cm_test_link_libraries(pkgconfigcheck)
 
-bcm_install_targets(TARGETS pkgconfigcheck)
-bcm_auto_export(TARGETS pkgconfigcheck)
+cm_install_targets(TARGETS pkgconfigcheck)
+cm_auto_export(TARGETS pkgconfigcheck)
 
 if(DEFINED PKG_CONFIG_HEADER)
-    bcm_test_header(NAME testheader HEADER ${PKG_CONFIG_HEADER})
-    bcm_test_header(NAME teststaticheader HEADER ${PKG_CONFIG_HEADER} STATIC)
+    cm_test_header(NAME testheader HEADER ${PKG_CONFIG_HEADER})
+    cm_test_header(NAME teststaticheader HEADER ${PKG_CONFIG_HEADER} STATIC)
 endif()
 

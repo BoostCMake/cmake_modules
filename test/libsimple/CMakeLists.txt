@@ -5,11 +5,11 @@ find_package(BCM)
 
 include(BCMInstallTargets)
 include(BCMDeploy)
-include(BCMSetupVersion)
+include(BCMSetupVersion) if(CMAKE_SOURCES_DIR)     set(CURRENT_SOURCES_DIR ${CMAKE_SOURCES_DIR}/libs/${CURRENT_PROJECT_NAME}) endif()
 include(BCMTest)
 include(BCMPkgConfig)
 
-bcm_setup_version(VERSION 1.0 GENERATE_HEADER simpleversion.hpp)
+cm_setup_version(VERSION 1.0 GENERATE_HEADER simpleversion.hpp)
 
 find_package(Threads)
 
@@ -20,32 +20,32 @@ target_link_libraries(simple INTERFACE Threads::Threads)
 if(NOT MSVC)
 target_compile_options(simple INTERFACE -std=c++0x)
 endif()
-bcm_test_link_libraries(simple)
+cm_test_link_libraries(simple)
 install(FILES test.cpp DESTINATION include2)
-bcm_deploy(TARGETS simple INCLUDE include)
+cm_deploy(TARGETS simple INCLUDE include)
 
-bcm_test(NAME simpletest SOURCES test.cpp)
+cm_test(NAME simpletest SOURCES test.cpp)
 
-bcm_test(SOURCES test.cpp)
+cm_test(SOURCES test.cpp)
 
-bcm_test(NAME simpletestcompile SOURCES compiletest.cpp COMPILE_ONLY)
+cm_test(NAME simpletestcompile SOURCES compiletest.cpp COMPILE_ONLY)
 
-bcm_test(SOURCES compiletest.cpp COMPILE_ONLY)
+cm_test(SOURCES compiletest.cpp COMPILE_ONLY)
 
-bcm_test(NAME testwillfail SOURCES testwillfail.cpp WILL_FAIL)
+cm_test(NAME testwillfail SOURCES testwillfail.cpp WILL_FAIL)
 
-bcm_test(SOURCES testwillfail.cpp WILL_FAIL)
+cm_test(SOURCES testwillfail.cpp WILL_FAIL)
 
-bcm_test(NAME simpletestcompilewillfail SOURCES compiletestwillfail.cpp COMPILE_ONLY WILL_FAIL)
+cm_test(NAME simpletestcompilewillfail SOURCES compiletestwillfail.cpp COMPILE_ONLY WILL_FAIL)
 
-bcm_test(SOURCES compiletestwillfail.cpp COMPILE_ONLY WILL_FAIL)
+cm_test(SOURCES compiletestwillfail.cpp COMPILE_ONLY WILL_FAIL)
 
-bcm_test_header(NAME simpletestheader HEADER simple.h)
+cm_test_header(NAME simpletestheader HEADER simple.h)
 
-bcm_test_header(HEADER simple.h)
+cm_test_header(HEADER simple.h)
 
-bcm_test_header(NAME simpleteststaticheader HEADER simple.h STATIC)
+cm_test_header(NAME simpleteststaticheader HEADER simple.h STATIC)
 
 add_library(simpletestinterface INTERFACE)
-bcm_mark_as_test(simpletestinterface)
+cm_mark_as_test(simpletestinterface)
 

@@ -6,16 +6,16 @@ find_package(BCM)
 include(BCMInstallTargets)
 include(BCMDeploy)
 include(BCMTest)
-include(BCMSetupVersion)
+include(BCMSetupVersion) if(CMAKE_SOURCES_DIR)     set(CURRENT_SOURCES_DIR ${CMAKE_SOURCES_DIR}/libs/${CURRENT_PROJECT_NAME}) endif()
 
-bcm_setup_version(VERSION 1.0)
+cm_setup_version(VERSION 1.0)
 
 find_package(simple REQUIRED)
 add_library(basic main.cpp)
 target_link_libraries(basic simple)
 
-bcm_deploy(TARGETS basic)
+cm_deploy(TARGETS basic)
 
-bcm_test(NAME basictest SOURCES test.cpp)
+cm_test(NAME basictest SOURCES test.cpp)
 target_link_libraries(basictest basic)
 

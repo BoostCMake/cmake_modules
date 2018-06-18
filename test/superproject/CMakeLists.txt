@@ -4,7 +4,7 @@ project(superproject)
 find_package(BCM)
 include(BCMIgnorePackage)
 
-bcm_ignore_package(simple)
+cm_ignore_package(simple)
 
 add_subdirectory(../libbasicnamespace libbasicnamespace)
 add_subdirectory(../libsimplenamespace libsimplenamespace)

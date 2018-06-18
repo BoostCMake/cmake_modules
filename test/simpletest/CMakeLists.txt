@@ -6,19 +6,19 @@ find_package(BCM)
 include(BCMInstallTargets)
 include(BCMDeploy)
 include(BCMTest)
-include(BCMSetupVersion)
+include(BCMSetupVersion) if(CMAKE_SOURCES_DIR)     set(CURRENT_SOURCES_DIR ${CMAKE_SOURCES_DIR}/libs/${CURRENT_PROJECT_NAME}) endif()
 
-bcm_setup_version(VERSION 1.0)
+cm_setup_version(VERSION 1.0)
 
 add_library(simple simple.cpp)
 target_include_directories(simple PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 
-bcm_deploy(TARGETS simple INCLUDE include)
+cm_deploy(TARGETS simple INCLUDE include)
 
-bcm_test(NAME simpletoptest SOURCES test.cpp)
+cm_test(NAME simpletoptest SOURCES test.cpp)
 target_link_libraries(simpletoptest simple)
 
-bcm_add_test_subdirectory(test)
+cm_add_test_subdirectory(test)
 
 if(TARGET simpletest)
     message(FATAL_ERROR "simpletest was not added")
