@@ -92,6 +92,6 @@ function(patch_directory SOURCES_DIRECTORY PATCHES_DIRECTORY OUTPUT_DIRECTORY)
 endfunction()
 
 function(set_current_source_dir WORKSPACE_SOURCE RESULT_NAME)
-    string(REPLACE "/libs" "/boost_1.58/libs" CURRENT_SOURCES_DIR ${WORKSPACE_SOURCE})
+    string(REPLACE "/libs" "/${BUILD_WITH_SOURCES_DIR}/libs" CURRENT_SOURCES_DIR ${WORKSPACE_SOURCE})
     set(${RESULT_NAME} ${CURRENT_SOURCES_DIR} PARENT_SCOPE)
 endfunction()
