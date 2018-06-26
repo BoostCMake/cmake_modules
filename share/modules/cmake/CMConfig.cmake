@@ -95,6 +95,10 @@ function(patch_directory SOURCES_DIRECTORY PATCHES_DIRECTORY OUTPUT_DIRECTORY)
             message(FATAL_ERROR "Source file for patch is not found: " ${PATCH_FILE})
         endif()
         list(GET SOURCES_FILES ${SOURCES_FILE_FIND} SOURCE_FILE)
-        patch_file(${SOURCE_FILE} ${PATCH_FILE} ${OUTPUT_DIRECTORY})
+
+        string(REPLACE ${SOURCES_DIRECTORY} ${OUTPUT_DIRECTORY} OUTPUT_FILE_DIRECTORY ${SOURCE_FILE})
+        get_filename_component(OUTPUT_FILE_DIRECTORY ${OUTPUT_FILE_DIRECTORY} DIRECTORY)
+
+        patch_file(${SOURCE_FILE} ${PATCH_FILE} ${OUTPUT_FILE_DIRECTORY})
     endforeach()
 endfunction()
