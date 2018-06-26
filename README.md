@@ -18,8 +18,8 @@ The modules can be installed using standard cmake install:
 
 Once installed, the modules can be used by using `find_package` and then including the appropriate module:
 
-    find_package(BCM)
-    include(BCMPackage)
+    find_package(CM)
+    include(CMPackage)
 
 Documentation
 -------------

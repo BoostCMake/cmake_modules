@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(basic)
 
-find_package(BCM)
+find_package(CM)
 
 include(CMInstallTargets)
 include(CMDeploy)
