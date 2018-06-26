@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.5)
 project(basic)
 
-find_package(BCM)
+find_package(CM)
 
-include(BCMInstallTargets)
-include(BCMDeploy)
-include(BCMTest)
-include(BCMSetupVersion)
+include(CMInstallTargets)
+include(CMDeploy)
+include(CMTest)
+include(CMSetupVersion)
 
 cm_setup_version(VERSION 1.0)
 

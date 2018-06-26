@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 project(superproject)
 
-find_package(BCM)
-include(BCMIgnorePackage)
+find_package(CM)
+include(CMIgnorePackage)
 
 cm_ignore_package(simple)
 

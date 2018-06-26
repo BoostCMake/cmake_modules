@@ -1,5 +1,5 @@
 =============
-BCMProperties
+CMProperties
 =============
 
 This module defines several properties that can be used to control language features in C++.

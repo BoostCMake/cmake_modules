@@ -1,5 +1,5 @@
 =========
-BCMIgnorePackage
+CMIgnorePackage
 =========
 
 ------------------

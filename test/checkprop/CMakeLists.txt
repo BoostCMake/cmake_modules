@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.5)
 project(checkprop)
 
-find_package(BCM)
+find_package(CM)
 
-include(BCMProperties)
+include(CMProperties)
 
 get_property(CURRENT_PROP_VAL GLOBAL PROPERTY ${PROP_NAME})
 

@@ -234,11 +234,11 @@ Putting it all together we have a cmake file that looks like this::
 Building standalone with BCM
 ----------------------------
 
-The boost cmake modules can help reduce the boilerplate needed in writing these libraries. To use these modules we just call ``find_package(BCM)`` first::
+The boost cmake modules can help reduce the boilerplate needed in writing these libraries. To use these modules we just call ``find_package(CM)`` first::
 
     cmake_minimum_required(VERSION 3.5)
     project(boost_filesystem)
-    find_package(BCM)
+    find_package(CM)
 
 Next we can setup the version for the project using ``bcm_setup_version``::
 
