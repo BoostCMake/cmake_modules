@@ -4,12 +4,12 @@ Modules
 .. toctree::
     :maxdepth: 3
 
-    BCMDeploy
-    BCMExport
-    BCMIgnorePackage
-    BCMInstallTargets
-    BCMPkgConfig
-    BCMProperties
-    BCMSetupVersion
-    BCMTest
+    CMDeploy
+    CMExport
+    CMIgnorePackage
+    CMInstallTargets
+    CMPkgConfig
+    CMProperties
+    CMSetupVersion
+    CMTest
     

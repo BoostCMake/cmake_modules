@@ -1,5 +1,5 @@
 ===============
-BCMSetupVersion
+CMSetupVersion
 ===============
 
 -----------------

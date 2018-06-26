@@ -3,10 +3,10 @@ project(properties)
 
 find_package(BCM)
 
-include(BCMProperties)
-include(BCMSetupVersion)
-include(BCMDeploy)
-include(BCMTest)
+include(CMProperties)
+include(CMSetupVersion)
+include(CMDeploy)
+include(CMTest)
 
 cm_setup_version(VERSION 1.0)
 

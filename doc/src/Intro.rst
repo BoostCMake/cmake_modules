@@ -19,7 +19,7 @@ The modules can be installed using standard cmake install::
 Once installed, the modules can be used by using ``find_package`` and then including the appropriate module::
 
     find_package(BCM)
-    include(BCMDeploy)
+    include(CMDeploy)
 
 ===========
 Quick Start
@@ -35,8 +35,8 @@ The BCM modules provide some high-level cmake functions to take care of all the 
     project(boost_config)
     
     find_package(BCM)
-    include(BCMDeploy)
-    include(BCMSetupVersion)
+    include(CMDeploy)
+    include(CMSetupVersion)
 
     bcm_setup_version(VERSION 1.58.0)
 

@@ -3,11 +3,11 @@ project(pkgconfigcheck)
 
 find_package(BCM)
 
-include(BCMInstallTargets)
-include(BCMDeploy)
-include(BCMSetupVersion)
-include(BCMTest)
-include(BCMPkgConfig)
+include(CMInstallTargets)
+include(CMDeploy)
+include(CMSetupVersion)
+include(CMTest)
+include(CMPkgConfig)
 
 set(_pkgconfig_path)
 foreach(PATH ${CMAKE_PREFIX_PATH})

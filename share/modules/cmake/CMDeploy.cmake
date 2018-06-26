@@ -1,7 +1,7 @@
 
-include(BCMPkgConfig)
-include(BCMInstallTargets)
-include(BCMExport)
+include(CMPkgConfig)
+include(CMInstallTargets)
+include(CMExport)
 
 function(cm_deploy)
     set(options SKIP_HEADER_INSTALL)

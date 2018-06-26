@@ -3,11 +3,11 @@ project(simple)
 
 find_package(BCM)
 
-include(BCMInstallTargets)
-include(BCMDeploy)
-include(BCMSetupVersion)
-include(BCMTest)
-include(BCMPkgConfig)
+include(CMInstallTargets)
+include(CMDeploy)
+include(CMSetupVersion)
+include(CMTest)
+include(CMPkgConfig)
 
 cm_setup_version(VERSION 1.0 GENERATE_HEADER simpleversion.hpp)
 

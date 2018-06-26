@@ -3,10 +3,10 @@ project(basicapp)
 
 find_package(BCM)
 
-include(BCMInstallTargets)
-include(BCMDeploy)
-include(BCMTest)
-include(BCMSetupVersion)
+include(CMInstallTargets)
+include(CMDeploy)
+include(CMTest)
+include(CMSetupVersion)
 
 cm_setup_version(VERSION 1.0)
 
