@@ -72,10 +72,9 @@ function(patch_file INPUT_SOURCE INPUT_PATCH OUTPUT_DIRECTORY)
         message(FATAL_ERROR "Patch utulity is not found")
     endif()
     string(REPLACE ${CURRENT_TEST_SOURCES_DIR} ${CMAKE_CURRENT_BINARY_DIR} OUTPUT_FILE ${INPUT_SOURCE})
-    get_filename_component(OUTPUT_DIRECTORY ${OUTPUT_FILE} DIRECTORY)
     file(COPY ${INPUT_SOURCE} DESTINATION ${OUTPUT_DIRECTORY})
     get_filename_component(SOURCE_FILE_NAME ${INPUT_SOURCE} NAME)
-    execute_process(COMMAND patch ${OUTPUT_FILE} ${INPUT_PATCH}
+    execute_process(COMMAND patch ${OUTPUT_DIRECTORY}/${SOURCE_FILE_NAME} ${INPUT_PATCH}
                     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 endfunction()
 
@@ -89,16 +88,13 @@ function(patch_directory SOURCES_DIRECTORY PATCHES_DIRECTORY OUTPUT_DIRECTORY)
     foreach(PATCH_FILE IN LISTS PATCHES_FILES)
         string(REPLACE ".patch" "" SOURCE_FILE_NAME ${PATCH_FILE})
         string(REPLACE ${PATCHES_DIRECTORY} ${SOURCES_DIRECTORY} SOURCE_FILE_NAME ${SOURCE_FILE_NAME})
-
         list(FIND SOURCES_FILES ${SOURCE_FILE_NAME} SOURCES_FILE_FIND)
         if(${SOURCES_FILE_FIND} EQUAL -1)
             message(FATAL_ERROR "Source file for patch is not found: " ${PATCH_FILE})
         endif()
         list(GET SOURCES_FILES ${SOURCES_FILE_FIND} SOURCE_FILE)
-
         string(REPLACE ${SOURCES_DIRECTORY} ${OUTPUT_DIRECTORY} OUTPUT_FILE_DIRECTORY ${SOURCE_FILE})
         get_filename_component(OUTPUT_FILE_DIRECTORY ${OUTPUT_FILE_DIRECTORY} DIRECTORY)
-
         patch_file(${SOURCE_FILE} ${PATCH_FILE} ${OUTPUT_FILE_DIRECTORY})
     endforeach()
 endfunction()
