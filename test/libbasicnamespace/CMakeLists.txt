@@ -7,6 +7,7 @@ include(CMInstallTargets)
 include(CMDeploy)
 include(CMTest)
 include(CMSetupVersion)
+include(CMFuture)
 
 cm_setup_version(VERSION 1.0)
 
