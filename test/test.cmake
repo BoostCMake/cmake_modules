@@ -56,6 +56,7 @@ function(install_dir DIR)
         set(TOOLCHAIN_ARG "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}")
     endif()
     test_exec(COMMAND ${CMAKE_COMMAND}
+              -DCMAKE_MODULE_PATH=${CMAKE_MODULE_PATH}
               -DCMAKE_PREFIX_PATH=${PREFIX}
               -DCMAKE_INSTALL_PREFIX=${PREFIX}
               -DTHREADS_PREFER_PTHREAD_FLAG=1
