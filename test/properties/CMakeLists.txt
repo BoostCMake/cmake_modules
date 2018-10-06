@@ -26,42 +26,42 @@ cm_test_link_libraries(simple)
 cm_test(NAME simpletest SOURCES test.cpp)
 
 cm_test(NAME rttitest SOURCES test.cpp)
-set_target_properties(rttitest PROPERTIES CXX_RTTI Off)
+set_target_properties(rttitest PROPERTIES CXX_RTTI FALSE)
 
 cm_test(NAME exceptiontest SOURCES test.cpp)
-set_target_properties(exceptiontest PROPERTIES CXX_EXCEPTIONS Off)
+set_target_properties(exceptiontest PROPERTIES CXX_EXCEPTIONS FALSE)
 
 cm_test(NAME statictest SOURCES test.cpp)
-set_target_properties(statictest PROPERTIES CXX_STATIC_RUNTIME On)
+set_target_properties(statictest PROPERTIES CXX_STATIC_RUNTIME TRUE)
 
 cm_test(NAME throw SOURCES throw.cpp COMPILE_ONLY WILL_FAIL)
-set_target_properties(throw PROPERTIES CXX_EXCEPTIONS Off)
+set_target_properties(throw PROPERTIES CXX_EXCEPTIONS FALSE)
 
 cm_test(NAME throwpass SOURCES throw.cpp)
-set_target_properties(throwpass PROPERTIES CXX_EXCEPTIONS On)
+set_target_properties(throwpass PROPERTIES CXX_EXCEPTIONS TRUE)
 
 cm_test(NAME rtti SOURCES rtti.cpp COMPILE_ONLY WILL_FAIL)
-set_target_properties(rtti PROPERTIES CXX_RTTI Off)
+set_target_properties(rtti PROPERTIES CXX_RTTI FALSE)
 
 cm_test(NAME rttipass SOURCES rtti.cpp)
-set_target_properties(rttipass PROPERTIES CXX_RTTI On)
+set_target_properties(rttipass PROPERTIES CXX_RTTI TRUE)
 
-foreach(WARNING_LEVEL off on all)
+foreach(WARNING_LEVEL FALSE TRUE all)
     cm_test(NAME warnings-${WARNING_LEVEL} SOURCES warnings.cpp)
     set_target_properties(warnings-${WARNING_LEVEL} PROPERTIES CXX_WARNINGS ${WARNING_LEVEL})
 
-    if(WARNING_LEVEL STREQUAL "off")
+    if(WARNING_LEVEL STREQUAL "FALSE")
         cm_test(NAME warnings-errors-${WARNING_LEVEL} SOURCES warnings.cpp COMPILE_ONLY)
     else()
         cm_test(NAME warnings-errors-${WARNING_LEVEL} SOURCES warnings.cpp COMPILE_ONLY WILL_FAIL)
     endif()
     set_target_properties(warnings-errors-${WARNING_LEVEL} PROPERTIES CXX_WARNINGS ${WARNING_LEVEL})
-    set_target_properties(warnings-errors-${WARNING_LEVEL} PROPERTIES CXX_WARNINGS_AS_ERRORS On)
+    set_target_properties(warnings-errors-${WARNING_LEVEL} PROPERTIES CXX_WARNINGS_AS_ERRORS TRUE)
 
     cm_test(NAME nowarnings-${WARNING_LEVEL} SOURCES nowarnings.cpp)
     set_target_properties(nowarnings-${WARNING_LEVEL} PROPERTIES CXX_WARNINGS ${WARNING_LEVEL})
 
     cm_test(NAME nowarnings-errors-${WARNING_LEVEL} SOURCES nowarnings.cpp)
     set_target_properties(nowarnings-errors-${WARNING_LEVEL} PROPERTIES CXX_WARNINGS ${WARNING_LEVEL})
-    set_target_properties(nowarnings-errors-${WARNING_LEVEL} PROPERTIES CXX_WARNINGS_AS_ERRORS On)
+    set_target_properties(nowarnings-errors-${WARNING_LEVEL} PROPERTIES CXX_WARNINGS_AS_ERRORS TRUE)
 endforeach()
