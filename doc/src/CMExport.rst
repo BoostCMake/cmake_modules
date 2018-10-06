@@ -3,10 +3,10 @@ CMExport
 =========
 
 ---------------
-bcm_auto_export
+cm_auto_export
 ---------------
 
-.. program:: bcm_auto_export
+.. program:: cm_auto_export
 
 This generates a simple cmake config file that includes the exported targets.
 

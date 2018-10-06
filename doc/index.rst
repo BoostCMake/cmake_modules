@@ -1,9 +1,9 @@
 .. _contents:
 
-BCM
+CMakeModules
 ===
 
-**Paul Fultz II**
+**Mikhail Komarov**
 
 .. toctree::
     :maxdepth: 3

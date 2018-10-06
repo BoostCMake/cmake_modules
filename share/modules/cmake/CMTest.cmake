@@ -60,7 +60,7 @@ function(cm_create_internal_targets)
 endfunction()
 
 foreach (scope DIRECTORY TARGET)
-    define_property(${scope} PROPERTY "BCM_TEST_DEPENDENCIES" INHERITED
+    define_property(${scope} PROPERTY "CM_TEST_DEPENDENCIES" INHERITED
             BRIEF_DOCS "Default test dependencies"
             FULL_DOCS "Default test dependencies"
             )
@@ -69,19 +69,19 @@ endforeach ()
 function(cm_test_link_libraries)
     cm_create_internal_targets()
     if (BUILD_TESTS)
-        set_property(DIRECTORY APPEND PROPERTY BCM_TEST_DEPENDENCIES ${ARGN})
+        set_property(DIRECTORY APPEND PROPERTY CM_TEST_DEPENDENCIES ${ARGN})
         target_link_libraries(_cm_internal_tests-${PROJECT_NAME} ${ARGN})
     else ()
         foreach (TARGET ${ARGN})
             if (TARGET ${TARGET})
-                set_property(DIRECTORY APPEND PROPERTY BCM_TEST_DEPENDENCIES ${TARGET})
+                set_property(DIRECTORY APPEND PROPERTY CM_TEST_DEPENDENCIES ${TARGET})
                 target_link_libraries(_cm_internal_tests-${PROJECT_NAME} ${TARGET})
             elseif (${TARGET} MATCHES "::")
                 cm_shadow_exists(HAS_TARGET ${TARGET})
-                set_property(DIRECTORY APPEND PROPERTY BCM_TEST_DEPENDENCIES $<${HAS_TARGET}:${TARGET}>)
+                set_property(DIRECTORY APPEND PROPERTY CM_TEST_DEPENDENCIES $<${HAS_TARGET}:${TARGET}>)
                 target_link_libraries(_cm_internal_tests-${PROJECT_NAME} $<${HAS_TARGET}:${TARGET}>)
             else ()
-                set_property(DIRECTORY APPEND PROPERTY BCM_TEST_DEPENDENCIES ${TARGET})
+                set_property(DIRECTORY APPEND PROPERTY CM_TEST_DEPENDENCIES ${TARGET})
                 target_link_libraries(_cm_internal_tests-${PROJECT_NAME} ${TARGET})
             endif ()
             if (BUILD_SHARED_LIBS)
@@ -93,9 +93,9 @@ endfunction()
 
 function(cm_target_link_test_libs TARGET)
     # target_link_libraries(${TARGET}
-    #     $<TARGET_PROPERTY:BCM_TEST_DEPENDENCIES>
+    #     $<TARGET_PROPERTY:CM_TEST_DEPENDENCIES>
     # )
-    get_property(DEPS DIRECTORY PROPERTY BCM_TEST_DEPENDENCIES)
+    get_property(DEPS DIRECTORY PROPERTY CM_TEST_DEPENDENCIES)
     target_link_libraries(${TARGET} ${DEPS})
 endfunction()
 

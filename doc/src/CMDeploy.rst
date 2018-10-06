@@ -3,10 +3,10 @@ CMDeploy
 =========
 
 ----------
-bcm_deploy
+cm_deploy
 ----------
 
-.. program:: bcm_deploy
+.. program:: cm_deploy
 
 This will install targets, as well as generate package configuration for both cmake and pkgconfig.
 

@@ -3,10 +3,10 @@ CMSetupVersion
 ===============
 
 -----------------
-bcm_setup_version
+cm_setup_version
 -----------------
 
-.. program:: bcm_setup_version
+.. program:: cm_setup_version
 
 This sets up the project version by setting these version variables::
 

@@ -1,28 +1,28 @@
-=======
+======
 CMTest
-=======
+======
 
 ----------------
-bcm_mark_as_test
+cm_mark_as_test
 ----------------
 
-.. program:: bcm_mark_as_test
+.. program:: cm_mark_as_test
 
 This marks the target as a test, so it will be built with the ``tests`` target. If ``BUILD_TESTS`` is set to off then the target will not be built as part of the all target.
 
 -----------------------
-bcm_test_link_libraries
+cm_test_link_libraries
 -----------------------
 
-.. program:: bcm_test_link_libraries
+.. program:: cm_test_link_libraries
 
 This sets libraries that the tests will link against by default.
 
 --------
-bcm_test
+cm_test
 --------
 
-.. program:: bcm_test
+.. program:: cm_test
 
 This setups a test. By default, a test will be built and executed.
 
@@ -52,13 +52,13 @@ Specifies that the test will fail.
 
 .. option:: NO_TEST_LIBS
 
-This won't link in the libraries specified by ``bcm_test_link_libraries``
+This won't link in the libraries specified by ``cm_test_link_libraries``
 
 ---------------
-bcm_test_header
+cm_test_header
 ---------------
 
-.. program:: bcm_test_header
+.. program:: cm_test_header
 
 This creates a test to test the include of a header.
 
@@ -76,13 +76,13 @@ Rather than just test the include, using ``STATIC`` option will test the include
 
 .. option:: NO_TEST_LIBS
 
-This won't link in the libraries specified by ``bcm_test_link_libraries``
+This won't link in the libraries specified by ``cm_test_link_libraries``
 
 -------------------------
-bcm_add_test_subdirectory
+cm_add_test_subdirectory
 -------------------------
 
-.. program:: bcm_add_test_subdirectory
+.. program:: cm_add_test_subdirectory
 
 This calls ``add_subdirectory`` if the ``ENABLE_TESTS`` property is true. The default value for the property is set by ``CMAKE_ENABLE_TESTS`` variable.
 

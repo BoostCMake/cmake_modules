@@ -38,13 +38,13 @@ The BCM modules provide some high-level cmake functions to take care of all the 
     include(CMDeploy)
     include(CMSetupVersion)
 
-    bcm_setup_version(VERSION 1.58.0)
+    cm_setup_version(VERSION 1.58.0)
 
     add_library(boost_config INTERFACE)
     add_library(boost::config ALIAS boost_config)
     set_property(TARGET boost_config PROPERTY EXPORT_NAME config)
 
-    bcm_deploy(TARGETS config INCLUDE include)
+    cm_deploy(TARGETS config INCLUDE include)
     
 
 This sets up the Boost.Config cmake with the version ``1.64.0``. More importantly the user can now install the library, like this::
@@ -70,20 +70,20 @@ Or if the user isn't using cmake, then ``pkg-config`` can be used instead::
 Tests
 -----
 
-The BCM modules provide functions for creating tests that integrate into cmake's ctest infrastructure. All tests can be built and ran using ``make check``. The ``bcm_test`` function can add a test to be ran::
+The BCM modules provide functions for creating tests that integrate into cmake's ctest infrastructure. All tests can be built and ran using ``make check``. The ``cm_test`` function can add a test to be ran::
 
-    bcm_test(NAME config_test_c SOURCES config_test_c.c)
+    cm_test(NAME config_test_c SOURCES config_test_c.c)
 
 This will compile the ``SOURCES`` and run them. The test also needs to link in ``boost_config``. This can be done with ``target_link_libraries``::
 
     target_link_libraries(config_test_c boost::config)
 
-Or all tests in the directory can be set using ``bcm_test_link_libraries``::
+Or all tests in the directory can be set using ``cm_test_link_libraries``::
 
-    bcm_test_link_libraries(boost::config)
+    cm_test_link_libraries(boost::config)
 
 And all tests in the directory will use ``boost::config``.
 
 Also, tests can be specified as compile-only or as expected to fail::
 
-    bcm_test(NAME test_thread_fail1 SOURCES threads/test_thread_fail1.cpp COMPILE_ONLY WILL_FAIL)
+    cm_test(NAME test_thread_fail1 SOURCES threads/test_thread_fail1.cpp COMPILE_ONLY WILL_FAIL)

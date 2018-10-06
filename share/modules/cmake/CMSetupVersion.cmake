@@ -1,5 +1,5 @@
 include(GNUInstallDirs)
-set(BCM_HEADER_VERSION_TEMPLATE_FILE "${CMAKE_CURRENT_LIST_DIR}/version.hpp")
+set(CM_HEADER_VERSION_TEMPLATE_FILE "${CMAKE_CURRENT_LIST_DIR}/version.hpp")
 
 macro(cm_set_parent VAR)
     set(${VAR} ${ARGN} PARENT_SCOPE)
@@ -45,7 +45,7 @@ function(cm_setup_version)
     # TODO: Get version from the project
 
     if(PARSE_GENERATE_HEADER)
-        configure_file("${BCM_HEADER_VERSION_TEMPLATE_FILE}" "${PARSE_GENERATE_HEADER}")
+        configure_file("${CM_HEADER_VERSION_TEMPLATE_FILE}" "${PARSE_GENERATE_HEADER}")
         install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PARSE_GENERATE_HEADER}" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
     endif()
 

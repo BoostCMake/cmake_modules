@@ -3,10 +3,10 @@ CMInstallTargets
 =================
 
 -------------------
-bcm_install_targets
+cm_install_targets
 -------------------
 
-.. program:: bcm_install_targets
+.. program:: cm_install_targets
 
 This installs the targets specified. The directories will be installed according to GNUInstallDirs.
 It will also install a corresponding cmake package config(which can be found with ``find_package``) to link against the library targets. 

@@ -3,10 +3,10 @@ CMPkgConfig
 ============
 
 ---------------------------
-bcm_generate_pkgconfig_file
+cm_generate_pkgconfig_file
 ---------------------------
 
-.. program:: bcm_generate_pkgconfig_file
+.. program:: cm_generate_pkgconfig_file
 
 This will generate a simple pkgconfig file.
 
@@ -43,10 +43,10 @@ Additional libraries to be linked.
 List of other pkgconfig packages that this module depends on.
 
 ------------------
-bcm_auto_pkgconfig
+cm_auto_pkgconfig
 ------------------
 
-.. program:: bcm_auto_pkgconfig
+.. program:: cm_auto_pkgconfig
 
 This will auto generate pkgconfig from a given target. All the compiler and linker flags come from the target.
 
