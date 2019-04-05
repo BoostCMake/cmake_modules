@@ -30,8 +30,8 @@ function(cm_cpack)
 
     cm_mark_as_packages(${TARGET_NAME})
 
-    include(CPack)
-    #include(CPackDeb)
+    #include(CPack)
+
+    include(UploadPPA)
 endfunction()
 
-include(UploadPPA)

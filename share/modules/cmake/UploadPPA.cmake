@@ -47,11 +47,6 @@
 #
 # Check the lintian warnings!
 #
-##
-# TODO
-# I plan to add support for git dch (from git-buildpackage) to auto generate
-# the changelog.
-##
 
 find_program(DEBUILD_EXECUTABLE debuild)
 find_program(DPUT_EXECUTABLE dput)
@@ -98,7 +93,7 @@ message(STATUS "Debian version: ${DEBIAN_PACKAGE_VERSION}")
 set(DEBIAN_SOURCE_DIR ${CMAKE_BINARY_DIR}/Debian/${CPACK_DEBIAN_PACKAGE_NAME}_${DEBIAN_PACKAGE_VERSION})
 ##############################################################################
 # debian/control
-set(debian_control ${DEBIAN_SOURCE_DIR}/debian/control)
+set(debian_control ${CMAKE_CURRENT_BINARY_DIR}/debian/control)
 list(APPEND CPACK_DEBIAN_PACKAGE_BUILD_DEPENDS cmake)
 list(REMOVE_DUPLICATES CPACK_DEBIAN_PACKAGE_BUILD_DEPENDS)
 list(SORT CPACK_DEBIAN_PACKAGE_BUILD_DEPENDS)
@@ -138,11 +133,11 @@ foreach(COMPONENT ${CPACK_COMPONENTS_ALL})
 endforeach(COMPONENT ${CPACK_COMPONENTS_ALL})
 ##############################################################################
 # debian/copyright
-set(debian_copyright ${DEBIAN_SOURCE_DIR}/debian/copyright)
+set(debian_copyright ${CMAKE_CURRENT_BINARY_DIR}/debian/copyright)
 configure_file(${CPACK_RESOURCE_FILE_LICENSE} ${debian_copyright} COPYONLY)
 ##############################################################################
 # debian/rules
-set(debian_rules ${DEBIAN_SOURCE_DIR}/debian/rules)
+set(debian_rules ${CMAKE_CURRENT_BINARY_DIR}/debian/rules)
 file(WRITE ${debian_rules}
         "#!/usr/bin/make -f\n"
         "\n"
@@ -229,13 +224,13 @@ file(APPEND ${debian_rules}
 execute_process(COMMAND chmod +x ${debian_rules})
 ##############################################################################
 # debian/compat
-file(WRITE ${DEBIAN_SOURCE_DIR}/debian/compat "7")
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/debian/compat "7")
 ##############################################################################
 # debian/source/format
-file(WRITE ${DEBIAN_SOURCE_DIR}/debian/source/format "3.0 (quilt)")
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/debian/source/format "3.0 (quilt)")
 ##############################################################################
 # debian/changelog
-set(debian_changelog ${DEBIAN_SOURCE_DIR}/debian/changelog)
+set(debian_changelog ${CMAKE_CURRENT_BINARY_DIR}/debian/changelog)
 if(NOT CPACK_DEBIAN_RESOURCE_FILE_CHANGELOG)
     set(CPACK_DEBIAN_RESOURCE_FILE_CHANGELOG ${CMAKE_SOURCE_DIR}/debian/changelog)
 endif()
@@ -299,7 +294,7 @@ file(WRITE "${CMAKE_BINARY_DIR}/Debian/cpack.cmake"
         "set(CPACK_IGNORE_FILES \"${CPACK_SOURCE_IGNORE_FILES}\")\n"
         "set(CPACK_INSTALLED_DIRECTORIES \"${CPACK_SOURCE_INSTALLED_DIRECTORIES}\")\n"
         )
-set(orig_file "${DEBIAN_SOURCE_DIR}/${package_file_name}.orig.tar.bz2")
+set(orig_file "${CMAKE_CURRENT_BINARY_DIR}/${package_file_name}.orig.tar.bz2")
 add_custom_command(OUTPUT "${orig_file}"
         COMMAND cpack --config ./cpack.cmake
         WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/Debian"
@@ -311,7 +306,7 @@ set(DEB_SOURCE_CHANGES
         )
 add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/Debian/${DEB_SOURCE_CHANGES}
         COMMAND ${DEBUILD_EXECUTABLE} -S
-        WORKING_DIRECTORY ${DEBIAN_SOURCE_DIR}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         DEPENDS "${orig_file}"
         )
 ##############################################################################
