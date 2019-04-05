@@ -1,4 +1,4 @@
-CMake Modules [![Build Status](https://travis-ci.com/BoostCMake/cmake_modules.svg?branch=master)](https://travis-ci.com/BoostCMake/cmake_modules) [![Build status](https://ci.appveyor.com/api/projects/status/f3qe31c4hd7iwumn?svg=true)](https://ci.appveyor.com/project/nemo1369/cmake-modules)
+CMake Modules [![Build Status](https://travis-ci.com/BoostCMake/cmake_modules.svg?branch=master)](https://travis-ci.com/BoostCMake/cmake_modules) [![Build status](https://ci.appveyor.com/api/projects/status/f3qe31c4hd7iwumn/branch/master?svg=true)](https://ci.appveyor.com/project/nemo1369/cmake-modules/branch/master)
 ===
 
 Motivation
