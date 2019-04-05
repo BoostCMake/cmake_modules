@@ -290,7 +290,7 @@ set(CPACK_SOURCE_IGNORE_FILES
         "/packaging/"
         "*~")
 set(package_file_name "${CPACK_DEBIAN_PACKAGE_NAME}_${CPACK_PACKAGE_VERSION}")
-file(WRITE "${CMAKE_BINARY_DIR}/Debian/cpack.cmake"
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/Debian/cpack.cmake"
         "set(CPACK_GENERATOR TBZ2)\n"
         "set(CPACK_PACKAGE_NAME \"${CPACK_DEBIAN_PACKAGE_NAME}\")\n"
         "set(CPACK_PACKAGE_VERSION \"${CPACK_PACKAGE_VERSION}\")\n"
@@ -302,14 +302,14 @@ file(WRITE "${CMAKE_BINARY_DIR}/Debian/cpack.cmake"
 set(orig_file "${CMAKE_CURRENT_BINARY_DIR}/${package_file_name}.orig.tar.bz2")
 add_custom_command(OUTPUT "${orig_file}"
         COMMAND cpack --config ./cpack.cmake
-        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/Debian"
+        WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Debian"
         )
 ##############################################################################
 # debuild -S
 set(DEB_SOURCE_CHANGES
         ${CPACK_DEBIAN_PACKAGE_NAME}_${DEBIAN_PACKAGE_VERSION}_source.changes
         )
-add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/Debian/${DEB_SOURCE_CHANGES}
+add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/Debian/${DEB_SOURCE_CHANGES}
         COMMAND ${DEBUILD_EXECUTABLE} -S
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         DEPENDS "${orig_file}"
@@ -317,6 +317,6 @@ add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/Debian/${DEB_SOURCE_CHANGES}
 ##############################################################################
 # dput ppa:your-lp-id/ppa <source.changes>
 add_custom_target(dput ${DPUT_EXECUTABLE} ${DPUT_HOST} ${DEB_SOURCE_CHANGES}
-        DEPENDS ${CMAKE_BINARY_DIR}/Debian/${DEB_SOURCE_CHANGES}
-        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/Debian
+        DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/Debian/${DEB_SOURCE_CHANGES}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Debian
         )
