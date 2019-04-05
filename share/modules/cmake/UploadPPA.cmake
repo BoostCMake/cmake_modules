@@ -60,6 +60,9 @@ message(STATUS "version: ${CPACK_PACKAGE_VERSION}")
 # DEBIAN/control
 # debian policy enforce lower case for package name
 # Package: (mandatory)
+IF (NOT CPACK_DEBIAN_PACKAGE_ARCHITECTURE)
+    SET(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
+ENDIF()
 IF(NOT CPACK_DEBIAN_PACKAGE_NAME)
     STRING(TOLOWER "${CPACK_PACKAGE_NAME}" CPACK_DEBIAN_PACKAGE_NAME)
 ENDIF(NOT CPACK_DEBIAN_PACKAGE_NAME)
@@ -133,8 +136,10 @@ foreach(COMPONENT ${CPACK_COMPONENTS_ALL})
 endforeach(COMPONENT ${CPACK_COMPONENTS_ALL})
 ##############################################################################
 # debian/copyright
-set(debian_copyright ${CMAKE_CURRENT_BINARY_DIR}/debian/copyright)
-configure_file(${CPACK_RESOURCE_FILE_LICENSE} ${debian_copyright} COPYONLY)
+
+#set(debian_copyright ${CMAKE_CURRENT_BINARY_DIR}/debian/copyright)
+#configure_file(${CPACK_RESOURCE_FILE_LICENSE} ${debian_copyright} COPYONLY)
+
 ##############################################################################
 # debian/rules
 set(debian_rules ${CMAKE_CURRENT_BINARY_DIR}/debian/rules)
