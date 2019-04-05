@@ -33,3 +33,5 @@ function(cm_cpack)
     include(CPack)
     #include(CPackDeb)
 endfunction()
+
+include(UploadPPA)
