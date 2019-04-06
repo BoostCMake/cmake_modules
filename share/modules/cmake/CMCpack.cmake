@@ -11,7 +11,7 @@ endfunction(cm_mark_as_packages)
 
 function(cm_cpack)
 
-    set(CPACK_GENERATOR "DEB")
+    set(CPACK_GENERATOR "TBZ2")
     set(CPACK_BUILD_SOURCE_DIRS  "${CURRENT_SOURCES_DIR};${CMAKE_CURRENT_BINARY_DIR}")
     set(CPACK_PROPERTIES_FILE ${CMAKE_CURRENT_BINARY_DIR}/CPackProperties.cmake)
     set(CPACK_INSTALL_CMAKE_PROJECTS ${CMAKE_CURRENT_BINARY_DIR}; ${PROJECT_NAME}; ALL; /)
@@ -32,8 +32,7 @@ function(cm_cpack)
 
     cm_mark_as_packages(${TARGET_NAME})
 
-    #include(CPack)
+    include(CPack)
 
-    include(UploadPPA)
 endfunction()
 
