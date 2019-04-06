@@ -146,90 +146,13 @@ set(debian_rules ${DEBIAN_SOURCE_DIR}/debian/rules)
 file(WRITE ${debian_rules}
         "#!/usr/bin/make -f\n"
         "\n"
-        "DEBUG = debug_build\n"
-        "RELEASE = release_build\n"
-        "GZIP = gzip\n"
-        "CFLAGS =\n"
-        "CPPFLAGS =\n"
-        "CXXFLAGS =\n"
-        "FFLAGS =\n"
-        "LDFLAGS =\n"
-        "\n"
-        "configure-debug:\n"
-        "\tcmake -E make_directory $(DEBUG)\n"
-        "\tcd $(DEBUG); cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../debian/tmp/usr ..\n"
-        "\ttouch configure-debug\n"
-        "\n"
-        "configure-release:\n"
-        "\tcmake -E make_directory $(RELEASE)\n"
-        "\tcd $(RELEASE); cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../debian/tmp/usr ..\n"
-        "\ttouch configure-release\n"
-        "\n"
-        "build: build-arch build-indep\n" # build-indep
-        "\n"
-        "build-arch: configure-release\n" # configure-debug
-        #  "\t$(MAKE) --no-print-directory -C $(DEBUG) preinstall\n"
-        "\t$(MAKE) --no-print-directory -C $(RELEASE) preinstall\n"
-        "\ttouch build-arch\n"
-        "\n"
-        "build-indep: configure-release\n"
-        "\t$(MAKE) --no-print-directory -C $(RELEASE) documentation\n"
-        "\ttouch build-indep\n"
-        "\n"
-        "binary: binary-arch binary-indep\n"
-        "\n"
-        "binary-arch: build-arch\n"
-        #  "\tcd $(DEBUG); cmake -DCOMPONENT=Unspecified -DCMAKE_INSTALL_PREFIX=../debian/tmp/usr -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake\n"
-        "\tcd $(RELEASE); cmake -DCOMPONENT=Unspecified -DCMAKE_INSTALL_PREFIX=../debian/tmp/usr -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake\n"
-        "\t$(GZIP) -9 -c debian/changelog > debian/tmp/usr/share/doc/${CMAKE_PROJECT_NAME}/changelog.Debian.gz\n"
-        "\tcmake -E make_directory debian/tmp/DEBIAN\n"
-        "\tdpkg-shlibdeps debian/tmp/usr/bin/*\n"
-        "\tdpkg-gencontrol -p${CPACK_DEBIAN_PACKAGE_NAME} -Pdebian/tmp\n"
-        "\tdpkg --build debian/tmp ..\n"
-        )
-foreach(component ${CPACK_COMPONENTS_ALL})
-    string(TOUPPER "${component}" COMPONENT)
-    if(NOT CPACK_COMPONENT_${COMPONENT}_BINARY_INDEP)
-        set(path debian/${component})
-        file(APPEND ${debian_rules}
-                #      "\tcd $(DEBUG); cmake -DCOMPONENT=${component} -DCMAKE_INSTALL_PREFIX=../${path}/usr -P cmake_install.cmake\n"
-                "\tcd $(RELEASE); cmake -DCOMPONENT=${component} -DCMAKE_INSTALL_PREFIX=../${path}/usr -P cmake_install.cmake\n"
-                "\tcmake -E make_directory ${path}/DEBIAN\n"
-                "\tdpkg-gencontrol -p${CPACK_COMPONENT_${COMPONENT}_DEB_PACKAGE} -P${path}\n"
-                "\tdpkg --build ${path} ..\n"
-                )
-    endif(NOT CPACK_COMPONENT_${COMPONENT}_BINARY_INDEP)
-endforeach(component)
-file(APPEND ${debian_rules}
-        "\n"
-        "binary-indep: build-indep\n"
-        )
-foreach(component ${CPACK_COMPONENTS_ALL})
-    string(TOUPPER "${component}" COMPONENT)
-    if(CPACK_COMPONENT_${COMPONENT}_BINARY_INDEP)
-        set(path debian/${component})
-        file(APPEND ${debian_rules}
-                #      "\tcd $(DEBUG); cmake -DCOMPONENT=${component} -DCMAKE_INSTALL_PREFIX=../${path}/usr -P cmake_install.cmake\n"
-                "\tcd $(RELEASE); cmake -DCOMPONENT=${component} -DCMAKE_INSTALL_PREFIX=../${path}/usr -P cmake_install.cmake\n"
-                "\tcmake -E make_directory ${path}/DEBIAN\n"
-                "\tdpkg-gencontrol -p${CPACK_COMPONENT_${COMPONENT}_DEB_PACKAGE} -P${path}\n"
-                "\tdpkg --build ${path} ..\n"
-                )
-    endif(CPACK_COMPONENT_${COMPONENT}_BINARY_INDEP)
-endforeach(component)
-file(APPEND ${debian_rules}
-        "\n"
-        "clean:\n"
-        "\tcmake -E remove_directory $(DEBUG)\n"
-        "\tcmake -E remove_directory $(RELEASE)\n"
-        "\tcmake -E remove configure-debug configure-release build-arch build-indep\n"
-        "\n"
-        ".PHONY: binary binary-arch binary-indep clean\n"
+        "%:\n"
+        "\tdh $@"
         )
 execute_process(COMMAND chmod +x ${debian_rules})
 ##############################################################################
 # debian/compat
-file(WRITE ${DEBIAN_SOURCE_DIR}/debian/compat "7")
+file(WRITE ${DEBIAN_SOURCE_DIR}/debian/compat "9")
 ##############################################################################
 # debian/source/format
 file(WRITE ${DEBIAN_SOURCE_DIR}/debian/source/format "3.0 (quilt)")
