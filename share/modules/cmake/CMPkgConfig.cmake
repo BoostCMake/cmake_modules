@@ -1,4 +1,3 @@
-
 include(GNUInstallDirs)
 
 define_property(TARGET PROPERTY "INTERFACE_DESCRIPTION"
@@ -126,24 +125,27 @@ function(cm_auto_pkgconfig_each)
     if(TARGET_REQUIRES)
         list(APPEND REQUIRES ${TARGET_REQUIRES})
     endif()
-    
+
     cm_preprocess_pkgconfig_property(LINK_LIBS ${TARGET} INTERFACE_LINK_LIBRARIES)
     foreach(LIB ${LINK_LIBS})
-        if(TARGET ${LIB})
-            get_property(LIB_PKGCONFIG_NAME TARGET ${LIB} PROPERTY INTERFACE_PKG_CONFIG_NAME)
-            # TODO: Error if this property is missing
-            if(LIB_PKGCONFIG_NAME)
-                list(APPEND REQUIRES ${LIB_PKGCONFIG_NAME})
-            endif()
-        else()
-            if("${LIB}" MATCHES "::")
-                set(LIB_TARGET_NAME "$<TARGET_PROPERTY:${LIB},ALIASED_TARGET>")
+        if (NOT ${LIB} MATCHES "^\\$<LINK_ONLY:.*>$")
+
+            if(TARGET ${LIB})
+                get_property(LIB_PKGCONFIG_NAME TARGET ${LIB} PROPERTY INTERFACE_PKG_CONFIG_NAME)
+                # TODO: Error if this property is missing
+                if(LIB_PKGCONFIG_NAME)
+                    list(APPEND REQUIRES ${LIB_PKGCONFIG_NAME})
+                endif()
             else()
-                set(LIB_TARGET_NAME "${LIB}")
+                if("${LIB}" MATCHES "::")
+                    set(LIB_TARGET_NAME "$<TARGET_PROPERTY:${LIB},ALIASED_TARGET>")
+                else()
+                    set(LIB_TARGET_NAME "${LIB}")
+                endif()
+                cm_shadow_exists(HAS_LIB_TARGET ${LIB})
+                list(APPEND REQUIRES "$<${HAS_LIB_TARGET}:$<TARGET_PROPERTY:${LIB_TARGET_NAME},INTERFACE_PKG_CONFIG_NAME>>")
+                set(LIBS "${LIBS} $<$<NOT:${HAS_LIB_TARGET}>:${LIB}>")
             endif()
-            cm_shadow_exists(HAS_LIB_TARGET ${LIB})
-            list(APPEND REQUIRES "$<${HAS_LIB_TARGET}:$<TARGET_PROPERTY:${LIB_TARGET_NAME},INTERFACE_PKG_CONFIG_NAME>>")
-            set(LIBS "${LIBS} $<$<NOT:${HAS_LIB_TARGET}>:${LIB}>")
         endif()
     endforeach()
 
@@ -184,6 +186,20 @@ function(cm_auto_pkgconfig_each)
         string(REPLACE ";" "," REQUIRES_CONTENT "${REQUIRES}")
         set(CONTENT "${CONTENT}\nRequires: ${REQUIRES_CONTENT}")
     endif()
+
+    message(WARNING "PKGCONFIG: " ${PACKAGE_NAME_LOWER} " "
+"
+prefix=${CMAKE_INSTALL_PREFIX}
+exec_prefix=\${prefix}
+libdir=\${exec_prefix}/${CMAKE_INSTALL_LIBDIR}
+includedir=\${exec_prefix}/${CMAKE_INSTALL_INCLUDEDIR}
+Name: ${PACKAGE_NAME_LOWER}
+Description: ${DESCRIPTION}
+Version: ${PROJECT_VERSION}
+${CONTENT}
+"
+    )
+
 
     file(GENERATE OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME_LOWER}.pc CONTENT
 "
