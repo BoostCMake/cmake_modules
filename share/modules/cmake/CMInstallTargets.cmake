@@ -27,7 +27,7 @@ function(cm_install_targets)
             get_filename_component(INCLUDE_PATH ${INCLUDE} ABSOLUTE)
             target_include_directories(${TARGET} INTERFACE $<BUILD_INTERFACE:${INCLUDE_PATH}>)
         endforeach()
-        target_include_directories(${TARGET} INTERFACE $<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${INCLUDE_INSTALL_DIR}>)
+        target_include_directories(${TARGET} INTERFACE $<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}>)
     endforeach()
 
 

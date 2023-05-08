@@ -22,13 +22,14 @@ function(cm_generate_pkgconfig_file)
 
     cmake_parse_arguments(PARSE "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
-    set(LIB_DIR ${CMAKE_INSTALL_LIBDIR})
+    set (FULL_LIB_DIR ${CMAKE_INSTALL_FULL_LIBDIR})
     if(PARSE_LIB_DIR)
-        set(LIB_DIR ${PARSE_LIB_DIR})
+        set(FULL_LIB_DIR "${CMAKE_INSTALL_LIBDIR}/${PARSE_LIB_DIR}")
     endif()
-    set(INCLUDE_DIR ${CMAKE_INSTALL_INCLUDEDIR})
+
+    set(FULL_INCLUDE_DIR ${CMAKE_INSTALL_FULL_INCLUDEDIR})
     if(PARSE_INCLUDE_DIR)
-        set(INCLUDE_DIR ${PARSE_INCLUDE_DIR})
+        set(FULL_INCLUDE_DIR "${CMAKE_INSTALL_INCLUDEDIR}/${PARSE_INCLUDE_DIR}")
     endif()
 
     set(LIBS)
@@ -58,8 +59,8 @@ function(cm_generate_pkgconfig_file)
 "
 prefix=${CMAKE_INSTALL_PREFIX}
 exec_prefix=\${prefix}
-libdir=\${exec_prefix}/${LIB_DIR}
-includedir=\${exec_prefix}/${INCLUDE_DIR}
+libdir=${FULL_LIB_DIR}
+includedir=${FULL_INCLUDE_DIR}
 Name: ${PKG_NAME}
 Description: ${DESCRIPTION}
 Version: ${PROJECT_VERSION}
@@ -187,26 +188,12 @@ function(cm_auto_pkgconfig_each)
         set(CONTENT "${CONTENT}\nRequires: ${REQUIRES_CONTENT}")
     endif()
 
-    message(WARNING "PKGCONFIG: " ${PACKAGE_NAME_LOWER} " "
-"
-prefix=${CMAKE_INSTALL_PREFIX}
-exec_prefix=\${prefix}
-libdir=\${exec_prefix}/${CMAKE_INSTALL_LIBDIR}
-includedir=\${exec_prefix}/${CMAKE_INSTALL_INCLUDEDIR}
-Name: ${PACKAGE_NAME_LOWER}
-Description: ${DESCRIPTION}
-Version: ${PROJECT_VERSION}
-${CONTENT}
-"
-    )
-
-
     file(GENERATE OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME_LOWER}.pc CONTENT
 "
 prefix=${CMAKE_INSTALL_PREFIX}
 exec_prefix=\${prefix}
-libdir=\${exec_prefix}/${CMAKE_INSTALL_LIBDIR}
-includedir=\${exec_prefix}/${CMAKE_INSTALL_INCLUDEDIR}
+libdir=${CMAKE_INSTALL_FULL_LIBDIR}
+includedir=${CMAKE_INSTALL_FULL_INCLUDEDIR}
 Name: ${PACKAGE_NAME_LOWER}
 Description: ${DESCRIPTION}
 Version: ${PROJECT_VERSION}
