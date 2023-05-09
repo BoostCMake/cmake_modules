@@ -1,4 +1,3 @@
-
 include(GNUInstallDirs)
 
 define_property(TARGET PROPERTY "INTERFACE_DESCRIPTION"
@@ -23,13 +22,14 @@ function(cm_generate_pkgconfig_file)
 
     cmake_parse_arguments(PARSE "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
-    set(LIB_DIR ${CMAKE_INSTALL_LIBDIR})
+    set (FULL_LIB_DIR ${CMAKE_INSTALL_FULL_LIBDIR})
     if(PARSE_LIB_DIR)
-        set(LIB_DIR ${PARSE_LIB_DIR})
+        set(FULL_LIB_DIR "${CMAKE_INSTALL_LIBDIR}/${PARSE_LIB_DIR}")
     endif()
-    set(INCLUDE_DIR ${CMAKE_INSTALL_INCLUDEDIR})
+
+    set(FULL_INCLUDE_DIR ${CMAKE_INSTALL_FULL_INCLUDEDIR})
     if(PARSE_INCLUDE_DIR)
-        set(INCLUDE_DIR ${PARSE_INCLUDE_DIR})
+        set(FULL_INCLUDE_DIR "${CMAKE_INSTALL_INCLUDEDIR}/${PARSE_INCLUDE_DIR}")
     endif()
 
     set(LIBS)
@@ -59,8 +59,8 @@ function(cm_generate_pkgconfig_file)
 "
 prefix=${CMAKE_INSTALL_PREFIX}
 exec_prefix=\${prefix}
-libdir=\${exec_prefix}/${LIB_DIR}
-includedir=\${exec_prefix}/${INCLUDE_DIR}
+libdir=${FULL_LIB_DIR}
+includedir=${FULL_INCLUDE_DIR}
 Name: ${PKG_NAME}
 Description: ${DESCRIPTION}
 Version: ${PROJECT_VERSION}
@@ -126,24 +126,27 @@ function(cm_auto_pkgconfig_each)
     if(TARGET_REQUIRES)
         list(APPEND REQUIRES ${TARGET_REQUIRES})
     endif()
-    
+
     cm_preprocess_pkgconfig_property(LINK_LIBS ${TARGET} INTERFACE_LINK_LIBRARIES)
     foreach(LIB ${LINK_LIBS})
-        if(TARGET ${LIB})
-            get_property(LIB_PKGCONFIG_NAME TARGET ${LIB} PROPERTY INTERFACE_PKG_CONFIG_NAME)
-            # TODO: Error if this property is missing
-            if(LIB_PKGCONFIG_NAME)
-                list(APPEND REQUIRES ${LIB_PKGCONFIG_NAME})
-            endif()
-        else()
-            if("${LIB}" MATCHES "::")
-                set(LIB_TARGET_NAME "$<TARGET_PROPERTY:${LIB},ALIASED_TARGET>")
+        if (NOT ${LIB} MATCHES "^\\$<LINK_ONLY:.*>$")
+
+            if(TARGET ${LIB})
+                get_property(LIB_PKGCONFIG_NAME TARGET ${LIB} PROPERTY INTERFACE_PKG_CONFIG_NAME)
+                # TODO: Error if this property is missing
+                if(LIB_PKGCONFIG_NAME)
+                    list(APPEND REQUIRES ${LIB_PKGCONFIG_NAME})
+                endif()
             else()
-                set(LIB_TARGET_NAME "${LIB}")
+                if("${LIB}" MATCHES "::")
+                    set(LIB_TARGET_NAME "$<TARGET_PROPERTY:${LIB},ALIASED_TARGET>")
+                else()
+                    set(LIB_TARGET_NAME "${LIB}")
+                endif()
+                cm_shadow_exists(HAS_LIB_TARGET ${LIB})
+                list(APPEND REQUIRES "$<${HAS_LIB_TARGET}:$<TARGET_PROPERTY:${LIB_TARGET_NAME},INTERFACE_PKG_CONFIG_NAME>>")
+                set(LIBS "${LIBS} $<$<NOT:${HAS_LIB_TARGET}>:${LIB}>")
             endif()
-            cm_shadow_exists(HAS_LIB_TARGET ${LIB})
-            list(APPEND REQUIRES "$<${HAS_LIB_TARGET}:$<TARGET_PROPERTY:${LIB_TARGET_NAME},INTERFACE_PKG_CONFIG_NAME>>")
-            set(LIBS "${LIBS} $<$<NOT:${HAS_LIB_TARGET}>:${LIB}>")
         endif()
     endforeach()
 
@@ -189,8 +192,8 @@ function(cm_auto_pkgconfig_each)
 "
 prefix=${CMAKE_INSTALL_PREFIX}
 exec_prefix=\${prefix}
-libdir=\${exec_prefix}/${CMAKE_INSTALL_LIBDIR}
-includedir=\${exec_prefix}/${CMAKE_INSTALL_INCLUDEDIR}
+libdir=${CMAKE_INSTALL_FULL_LIBDIR}
+includedir=${CMAKE_INSTALL_FULL_INCLUDEDIR}
 Name: ${PACKAGE_NAME_LOWER}
 Description: ${DESCRIPTION}
 Version: ${PROJECT_VERSION}
