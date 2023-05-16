@@ -145,6 +145,9 @@ include(\"\${CMAKE_CURRENT_LIST_DIR}/properties-${TARGET_FILE}.cmake\")
             ${NAMESPACE_ARG}
             )
 
+    export(EXPORT ${TARGET_FILE}
+           FILE ${CMAKE_BINARY_DIR}/lib/cmake/${PACKAGE_NAME}/${TARGET_FILE}.cmake)
+
     install(FILES
             ${CONFIG_FILE}
             ${CMAKE_CURRENT_BINARY_DIR}/${CONFIG_NAME}-version.cmake
@@ -152,4 +155,3 @@ include(\"\${CMAKE_CURRENT_LIST_DIR}/properties-${TARGET_FILE}.cmake\")
             ${CONFIG_PACKAGE_INSTALL_DIR})
 
 endfunction()
-
