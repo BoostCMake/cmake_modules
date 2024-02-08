@@ -201,6 +201,7 @@ ${CONTENT}
 "
   )
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME_LOWER}.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+    # TODO: add workspace handling here, now workspace part is missed from package name
     set_property(TARGET ${TARGET} PROPERTY INTERFACE_PKG_CONFIG_NAME ${PACKAGE_NAME_LOWER})
 endfunction()
 

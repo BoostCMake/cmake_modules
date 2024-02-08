@@ -10,7 +10,7 @@ function(cm_install_targets)
     string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
     if(CMAKE_WORKSPACE_NAME)
         string(TOLOWER ${CMAKE_WORKSPACE_NAME} CMAKE_WORKSPACE_NAME_LOWER)
-        set(EXPORT_FILE ${CMAKE_WORKSPACE_NAME_LOWER}-${PROJECT_NAME_LOWER}-targets)
+        set(EXPORT_FILE ${CMAKE_WORKSPACE_NAME_LOWER}_${PROJECT_NAME_LOWER}-targets)
     else()
         set(EXPORT_FILE ${PROJECT_NAME_LOWER}-targets)
     endif()
@@ -44,4 +44,3 @@ function(cm_install_targets)
             ARCHIVE DESTINATION ${LIB_INSTALL_DIR})
 
 endfunction()
-
