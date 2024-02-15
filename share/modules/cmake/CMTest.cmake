@@ -172,7 +172,7 @@ endif()
         endif ()
     endif ()
 
-    if (BUILD_SHARED_LIBS)
+    if (NOT Boost_USE_STATIC_LIBS)
         target_compile_definitions(${TEST_NAME} PRIVATE -DBOOST_TEST_DYN_LINK=1 -DBOOST_TEST_NO_AUTO_LINK=1)
     endif ()
 
