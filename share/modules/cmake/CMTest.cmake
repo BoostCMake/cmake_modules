@@ -67,7 +67,9 @@ foreach (scope DIRECTORY TARGET)
 endforeach ()
 
 function(cm_test_link_libraries)
-    set(internal-lib-name "_cm_internal_tests-${CMAKE_WORKSPACE_NAME}-${PROJECT_NAME}")
+    get_filename_component(FOLDER_NAME ${CMAKE_CURRENT_LIST_DIR} NAME)
+    string(REPLACE " " "_" FOLDER_NAME ${FOLDER_NAME})
+    set(internal-lib-name "_cm_internal_tests-${CMAKE_WORKSPACE_NAME}-${PROJECT_NAME}-${FOLDER_NAME}")
 
     cm_create_internal_targets(${internal-lib-name})
     if (BUILD_TESTS)
