@@ -52,6 +52,7 @@ endfunction(cm_mark_as_test)
 
 
 function(cm_create_internal_targets)
+    message("target name is _cm_internal_tests-${CMAKE_WORKSPACE_NAME}-${PROJECT_NAME}")
     if (NOT TARGET _cm_internal_tests-${CMAKE_WORKSPACE_NAME}-${PROJECT_NAME})
         file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/_cm_internal_tests-${CMAKE_WORKSPACE_NAME}-${PROJECT_NAME}.cpp "")
         add_library(_cm_internal_tests-${CMAKE_WORKSPACE_NAME}-${PROJECT_NAME} STATIC ${CMAKE_CURRENT_BINARY_DIR}/_cm_internal_tests-${CMAKE_WORKSPACE_NAME}-${PROJECT_NAME}.cpp)
