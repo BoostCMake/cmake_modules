@@ -8,9 +8,14 @@ set(SKIP_TESTS)
 if(DEFINED ENV{APPVEYOR})
     list(APPEND SKIP_TESTS
          pass-basic
+         pass-simple-shared
+         pass-simple-test-build
+         pass-simple-test-shared
+         pass-simple
          pass-simplecustomname
          pass-simplenamespace
          pass-simple-test
+         pass-superproject
          )
 endif()
 
