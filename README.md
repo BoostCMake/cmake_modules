@@ -15,7 +15,7 @@ The modules can be installed using standard cmake install:
     mkdir build
     cd build
     cmake ..
-    cmake --build . --target install
+    sudo cmake --build . --target install
 
 Once installed, the modules can be used by using `find_package` and then including the appropriate module:
 
